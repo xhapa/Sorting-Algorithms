@@ -9,11 +9,22 @@ WIDTH, HEIGHT = 1000, 700
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 FPS = 60
 image = pygame.image.load('messi.jpg')
-SCREEN.blit(image,(0,0))
-print(image.get_height(), type(image.get_height()))
+
 col_order = [x for x in range(image.get_height())]
 random.shuffle(col_order)
-print(col_order)
+
+def burble_sort(lst, slicer):
+  n = len(lst)
+  for i in range(n): # n steps
+    for j in range(0,n-i-1): # n-i-1 steps
+      if lst[j] > lst[j+1]:
+        lst[j], lst[j+1] = lst[j+1], lst[j]
+        draw(slicer)
+  return lst
+
+def draw_screen():
+    SCREEN.blit(image,(0,0))
+    pygame.display.update()
 
 def draw(slicer):
     slicer.draw_slices(SCREEN)
@@ -23,6 +34,7 @@ def main():
     pygame.init()
     running = True
     clock = pygame.time.Clock()
+    draw_screen()
 
     while running:
         clock.tick(FPS)
@@ -33,7 +45,7 @@ def main():
                 running = False
                 pygame.quit()
         draw(sli)
-        col_order.sort()
+        burble_sort(col_order, sli)
     main()
 
 if __name__=='__main__':
