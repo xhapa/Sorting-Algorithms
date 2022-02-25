@@ -22,6 +22,19 @@ def burble_sort(lst, slicer):
         draw(slicer)
   return lst
 
+def insertion_sort(lst, slicer):
+  n = len(lst)
+  for i in range(1,n): # n-1 steps
+    key = lst[i]
+    actual_pos = i - 1
+    while actual_pos >= 0 and lst[actual_pos] > key: # n steps 
+      lst[actual_pos + 1] = lst[actual_pos]
+      actual_pos-=1
+    lst[actual_pos + 1] = key
+    draw(slicer)
+  return lst
+
+
 def draw_screen():
     SCREEN.blit(image,(0,0))
     pygame.display.update()
@@ -45,7 +58,7 @@ def main():
                 running = False
                 pygame.quit()
         draw(sli)
-        burble_sort(col_order, sli)
+        insertion_sort(col_order, sli)
     main()
 
 if __name__=='__main__':
