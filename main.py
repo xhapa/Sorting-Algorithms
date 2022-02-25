@@ -34,6 +34,47 @@ def insertion_sort(lst, slicer):
     draw(slicer)
   return lst
 
+def merge_sort(lst, slicer):
+    if len(lst) > 1:
+        midle = len(lst)//2
+        left_lst = lst[:midle]
+        right_lst = lst[midle:]
+        print(left_lst, '*'*5, right_lst)
+
+        merge_sort(left_lst, slicer)
+        merge_sort(right_lst, slicer)
+
+        i = 0
+        j = 0
+        # main idx
+        k = 0
+
+        while i < len(left_lst) and j < len(right_lst):
+            if left_lst[i] < right_lst[j]:
+                lst[k] = left_lst[i]
+                i+=1
+            else:
+                lst[k] = right_lst[j]
+                j+=1
+
+            k+=1
+
+        while i < len(left_lst):
+            lst[k] = left_lst[i]
+            i+=1
+            k+=1
+
+        while j < len(right_lst):
+            lst[k] = right_lst[j]
+            j+=1
+            k+=1
+
+        print(f'Left{left_lst}, Right{right_lst}')
+        print(lst)
+        print('-'  * 50)
+        draw(slicer)
+
+    return lst
 
 def draw_screen():
     SCREEN.blit(image,(0,0))
