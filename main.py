@@ -1,4 +1,5 @@
 import pygame
+from datetime import datetime
 from pygame.locals import *
 import random
 from slicer import Slicer
@@ -13,6 +14,17 @@ image = pygame.image.load('messi.jpg')
 col_order = [x for x in range(image.get_height())]
 random.shuffle(col_order)
 
+def execution_time(func):
+    def wrapper(*args, **kwargs):
+        initial_time = datetime.now()
+        rv = func(*args, **kwargs)
+        final_time = datetime.now()
+        time_elapsed = final_time-initial_time
+        print(f'Execution time was {time_elapsed.total_seconds()} seconds')
+        return rv
+    return wrapper
+
+@execution_time
 def burble_sort(lst, slicer):
   n = len(lst)
   for i in range(n): # n steps
@@ -22,6 +34,7 @@ def burble_sort(lst, slicer):
         draw(slicer)
   return lst
 
+@execution_time
 def insertion_sort(lst, slicer):
   n = len(lst)
   for i in range(1,n): # n-1 steps
@@ -34,6 +47,7 @@ def insertion_sort(lst, slicer):
     draw(slicer)
   return lst
 
+@execution_time
 def merge_sort(lst, slicer):
     if len(lst) > 1:
         midle = len(lst)//2
