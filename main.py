@@ -72,11 +72,10 @@ def merge_sort(lst, slicer):
         print(f'Left{left_lst}, Right{right_lst}')
         print(lst)
         print('-'  * 50)
-        draw(slicer)
-
     return lst
 
 def draw_screen():
+    SCREEN.fill((255,255,255))
     SCREEN.blit(image,(0,0))
     pygame.display.update()
 
@@ -98,8 +97,15 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
                 pygame.quit()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_b:
+                burble_sort(col_order, sli)
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_i:
+                insertion_sort(col_order, sli)
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_m:
+                merge_sort(col_order, sli)
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
+                random.shuffle(col_order)
         draw(sli)
-        insertion_sort(col_order, sli)
     main()
 
 if __name__=='__main__':
