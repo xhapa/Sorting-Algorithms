@@ -106,20 +106,20 @@ def main():
     while running:
         clock.tick(FPS)
         pixel = pygame.PixelArray(image)
-        sli = Slicer(image.get_height(), pixel, col_order)
+        slicer = Slicer(image.get_height(), pixel, col_order)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
                 pygame.quit()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_b:
-                burble_sort(col_order, sli)
+                burble_sort(col_order, slicer)
             if event.type == pygame.KEYDOWN and event.key == pygame.K_i:
-                insertion_sort(col_order, sli)
+                insertion_sort(col_order, slicer)
             if event.type == pygame.KEYDOWN and event.key == pygame.K_m:
-                merge_sort(col_order, sli)
+                merge_sort(col_order, slicer)
             if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
                 random.shuffle(col_order)
-        draw(sli)
+        draw(slicer)
     main()
 
 if __name__=='__main__':
