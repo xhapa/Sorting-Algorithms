@@ -45,11 +45,11 @@ def insertion_sort(lst, slicer):
   for i in range(1,n): # n-1 steps
     key = lst[i]
     actual_pos = i - 1
-    while actual_pos >= 0 and lst[actual_pos] > key: # n steps 
-      lst[actual_pos + 1] = lst[actual_pos]
-      actual_pos-=1
+    while actual_pos >= 0 and lst[actual_pos] > key: # n steps
+        lst[actual_pos + 1] = lst[actual_pos]
+        actual_pos-=1
     lst[actual_pos + 1] = key
-    draw(slicer)
+    draw(slicer) 
   return lst
 
 @execution_time(exec_list, 'Merge Sort')
@@ -86,6 +86,27 @@ def merge(lst, left, right, middle, slicer):
     draw(slicer)
     return lst
 
+@execution_time(exec_list, 'Quick Sort')
+def quick_sort(lst, slicer):
+    quick_sort_alg(lst, 0, len(lst)-1, slicer)
+
+def quick_sort_alg(lst, low, high, slicer):
+    if low < high:
+        partition_idx = partition(lst, low, high, slicer)
+        quick_sort_alg(lst, low, partition_idx - 1, slicer)
+        quick_sort_alg(lst, partition_idx + 1, high, slicer)
+
+def partition(lst, low, high, slicer):
+    pivot = lst[high]
+    i = low - 1
+    for j in range(low, high):
+        if lst[j]<= pivot:
+            i+=1
+            lst[i], lst[j] = lst[j], lst[i]
+    lst[i+1], lst[high] = lst[high], lst[i+1]
+    draw(slicer)
+    return i + 1
+
 def draw_screen():
     SCREEN.fill((255,255,255))
     SCREEN.blit(image,(0,0))
@@ -116,6 +137,8 @@ def main():
                 insertion_sort(col_order, slicer)
             if event.type == pygame.KEYDOWN and event.key == pygame.K_m:
                 merge_sort(col_order, slicer)
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+                quick_sort(col_order, slicer)
             if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
                 random.shuffle(col_order)
         draw(slicer)
