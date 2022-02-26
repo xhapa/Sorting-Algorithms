@@ -1,6 +1,5 @@
 import pygame
 from datetime import datetime
-from pygame.locals import *
 import random
 from slicer import Slicer
 
@@ -49,44 +48,36 @@ def insertion_sort(lst, slicer):
 
 @execution_time
 def merge_sort(lst, slicer):
-    if len(lst) > 1:
-        midle = len(lst)//2
-        left_lst = lst[:midle]
-        right_lst = lst[midle:]
-        print(left_lst, '*'*5, right_lst)
+    merge_sort_alg(lst, 0, len(lst)-1, slicer)
 
-        merge_sort(left_lst, slicer)
-        merge_sort(right_lst, slicer)
+def merge_sort_alg(lst, left, right, slicer):
+    if left < right:
+        middle = (left + right) // 2
+        merge_sort_alg(lst, left, middle, slicer)
+        merge_sort_alg(lst, middle+1, right, slicer)
+        merge(lst, left, right, middle, slicer)
 
-        i = 0
-        j = 0
-        # main idx
-        k = 0
+def merge(lst, left, right, middle, slicer):
+    left_part = lst[left: middle+1]
+    right_part = lst[middle+1: right+1]
 
-        while i < len(left_lst) and j < len(right_lst):
-            if left_lst[i] < right_lst[j]:
-                lst[k] = left_lst[i]
-                i+=1
+    left_idx, right_idx = 0, 0
+
+    for lst_idx in range(left, right+1):
+        if left_idx < len(left_part) and right_idx < len(right_part):
+            if left_part[left_idx] <= right_part[right_idx]:
+                lst[lst_idx] = left_part[left_idx]
+                left_idx+=1
             else:
-                lst[k] = right_lst[j]
-                j+=1
-
-            k+=1
-
-        while i < len(left_lst):
-            lst[k] = left_lst[i]
-            i+=1
-            k+=1
-
-        while j < len(right_lst):
-            lst[k] = right_lst[j]
-            j+=1
-            k+=1
-
-        print(f'Left{left_lst}, Right{right_lst}')
-        print(lst)
-        print('-'  * 50)
-    return lst
+                lst[lst_idx] = right_part[right_idx]
+                right_idx+=1
+        elif left_idx < len(left_part):
+            lst[lst_idx] = left_part[left_idx]
+            left_idx+=1
+        else:
+            lst[lst_idx] = right_part[right_idx]
+            right_idx+=1
+    draw(slicer)
 
 def draw_screen():
     SCREEN.fill((255,255,255))
