@@ -1,3 +1,4 @@
+from tkinter import E
 import pygame
 from datetime import datetime
 import random
@@ -13,17 +14,22 @@ image = pygame.image.load('messi.jpg')
 col_order = [x for x in range(image.get_height())]
 random.shuffle(col_order)
 
-def execution_time(func):
-    def wrapper(*args, **kwargs):
-        initial_time = datetime.now()
-        rv = func(*args, **kwargs)
-        final_time = datetime.now()
-        time_elapsed = final_time-initial_time
-        print(f'Execution time was {time_elapsed.total_seconds()} seconds')
-        return rv
+exec_list = []
+
+def execution_time(exec_list, algorithm):
+    def wrapper(func):
+        def wrapped(*args, **kwargs):
+            initial_time = datetime.now()
+            rv = func(*args, **kwargs)
+            final_time = datetime.now()
+            time_elapsed = final_time-initial_time
+            print(f'Execution time was {time_elapsed.total_seconds()} seconds')
+            exec_list.append((algorithm, time_elapsed.total_seconds()))
+            return rv
+        return wrapped
     return wrapper
 
-@execution_time
+@execution_time(exec_list, 'Burble Sort')
 def burble_sort(lst, slicer):
   n = len(lst)
   for i in range(n): # n steps
@@ -33,7 +39,7 @@ def burble_sort(lst, slicer):
         draw(slicer)
   return lst
 
-@execution_time
+@execution_time(exec_list, 'Insertion Sort')
 def insertion_sort(lst, slicer):
   n = len(lst)
   for i in range(1,n): # n-1 steps
@@ -46,7 +52,7 @@ def insertion_sort(lst, slicer):
     draw(slicer)
   return lst
 
-@execution_time
+@execution_time(exec_list, 'Merge Sort')
 def merge_sort(lst, slicer):
     merge_sort_alg(lst, 0, len(lst)-1, slicer)
 
@@ -78,6 +84,7 @@ def merge(lst, left, right, middle, slicer):
             lst[lst_idx] = right_part[right_idx]
             right_idx+=1
     draw(slicer)
+    return lst
 
 def draw_screen():
     SCREEN.fill((255,255,255))
@@ -101,6 +108,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+                print(exec_list)
                 pygame.quit()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_b:
                 burble_sort(col_order, sli)
