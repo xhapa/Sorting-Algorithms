@@ -1,4 +1,3 @@
-from tkinter import E
 import pygame
 from datetime import datetime
 import random
