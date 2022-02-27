@@ -9,6 +9,7 @@ pygame.font.init()
 WIDTH, HEIGHT = 1000, 700
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 FONT = pygame.font.SysFont('lucidasans', 20, bold=True, italic=False)
+TITLE_FONT = pygame.font.SysFont('lucidasans', 40, bold=True, italic=False)
 FPS = 60
 image = pygame.image.load('messi.jpg')
 
@@ -111,7 +112,10 @@ def partition(lst, low, high, slicer):
 def draw_screen():
     SCREEN.fill((255,255,255))
     SCREEN.blit(image,(50,100))
-    SCREEN.blit(FONT.render('Original', 1,(0,0,0)),(200, 450))
+    SCREEN.blit(TITLE_FONT.render('Sorting Algorithms', 1,(0,0,0)),(280, 20))
+    SCREEN.blit(FONT.render('Original', 1,(0,0,0)),(200, 500))
+    SCREEN.blit(FONT.render('Unsorted', 1,(0,0,0)),(700, 500))
+    SCREEN.blit(FONT.render('Burble sort (B) | Insertion sort(I) | Merge sort(M) | Quick sort(Q) | Unsort(S)', 1,(0,0,0)),(80, 600))
     pygame.draw.rect(SCREEN, (255,255,255), pygame.Rect(950, 100, 50, 400))
     pygame.display.update()
 
