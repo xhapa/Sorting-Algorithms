@@ -7,8 +7,10 @@ pygame.display.set_caption('Sorting Algorithms')
 pygame.font.init()
 WIDTH, HEIGHT = 1000, 700
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
+FONT = pygame.font.SysFont('meslolgsnf', 20, bold=True, italic=False)
+TITLE_FONT = pygame.font.SysFont('meslolgsnf', 40, bold=True, italic=False)
 FPS = 60
-image = pygame.image.load('messi.jpg')
+image = pygame.image.load('messi.png')
 
 col_order = [x for x in range(image.get_height())]
 random.shuffle(col_order)
@@ -107,18 +109,37 @@ def partition(lst, low, high, slicer):
     return i + 1
 
 def draw_screen():
-    SCREEN.fill((255,255,255))
-    SCREEN.blit(image,(0,0))
+    SCREEN.fill('#090810')
+    pygame.draw.circle(SCREEN , '#4431FF', (30,60), 100)
+    pygame.draw.circle(SCREEN , '#4431FF', (130,30), 50)
+    pygame.draw.circle(SCREEN , '#4431FF', (970,640), 120)
+    pygame.draw.circle(SCREEN , '#4431FF', (870,670), 75)
+    pygame.draw.circle(SCREEN , '#4431FF', (25,300), 15)
+    pygame.draw.circle(SCREEN , '#4431FF', (400,600), 25)
+    SCREEN.blit(image,(50,100))
+    SCREEN.blit(TITLE_FONT.render('Sorting Algorithms', 1,(255,255,255)),(280, 20))
+    SCREEN.blit(FONT.render('Original', 1,(255,255,255)),(200, 500))
+    SCREEN.blit(FONT.render('Unsorted', 1,(255,255,255)),(700, 500))
+    SCREEN.blit(FONT.render('Burble sort (B) | Insertion sort(I) | Merge sort(M) | Quick sort(Q)', 1,(255,255,255)),(100, 600))
+    SCREEN.blit(FONT.render('| Unsort(S) |', 1,(255,255,255)),(420, 630))
+    pygame.draw.rect(SCREEN, (255,255,255), pygame.Rect(950, 100, 50, 400))
     pygame.display.update()
 
 def draw(slicer):
     slicer.draw_slices(SCREEN)
+    pygame.draw.rect(SCREEN, '#090810', pygame.Rect(950, 100, 50, 400))
+    pygame.display.update()
+
+def draw_algo_info(algorithm):
+    pygame.draw.rect(SCREEN, '#090810', pygame.Rect(430, 520, 200, 25))
+    SCREEN.blit(FONT.render(algorithm, 1,'#F85989'),(430, 520))
     pygame.display.update()
 
 def main():
     pygame.init()
     running = True
     clock = pygame.time.Clock()
+    algorithm = 'Wait Please...'
     draw_screen()
 
     while running:
@@ -131,15 +152,28 @@ def main():
                 print(exec_list)
                 pygame.quit()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_b:
+                algorithm = 'Burble Sort'
+                draw_algo_info(algorithm)
                 burble_sort(col_order, slicer)
             if event.type == pygame.KEYDOWN and event.key == pygame.K_i:
+                algorithm = 'Insertion Sort'
+                draw_algo_info(algorithm)
                 insertion_sort(col_order, slicer)
             if event.type == pygame.KEYDOWN and event.key == pygame.K_m:
+                algorithm = 'Merge Sort'
+                draw_algo_info(algorithm)
                 merge_sort(col_order, slicer)
             if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+                algorithm = 'Quick Sort'
+                draw_algo_info(algorithm)
                 quick_sort(col_order, slicer)
             if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
+                algorithm = 'Unsort'
+                draw_algo_info(algorithm)
                 random.shuffle(col_order)
+            else:
+                algorithm = 'Wait Please...'
+        draw_algo_info(algorithm)
         draw(slicer)
     main()
 

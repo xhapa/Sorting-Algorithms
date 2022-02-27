@@ -11,9 +11,9 @@ class Slicer():
         while counter-1!=self.__xlen-1:
             counter+=1
             if counter < self.__xlen-1:
-                yield ColumnSlice(self.__pixel_array[self.__colum_order[counter]:self.__colum_order[counter+1], ::], 600+counter, 0)
+                yield ColumnSlice(self.__pixel_array[self.__colum_order[counter]:self.__colum_order[counter+1], ::], 550+counter, 100)
             else:
-                yield ColumnSlice(self.__pixel_array[self.__colum_order[self.__xlen-1]:, ::], 600+self.__xlen-1, 0)
+                yield ColumnSlice(self.__pixel_array[self.__colum_order[self.__xlen-1]:, ::], 550+self.__xlen-1, 100)
 
     def draw_slices(self, screen):
         for element in self.col_slice_gen():
