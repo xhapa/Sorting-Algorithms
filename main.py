@@ -10,7 +10,7 @@ SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 FONT = pygame.font.SysFont('meslolgsnf', 20, bold=True, italic=False)
 TITLE_FONT = pygame.font.SysFont('meslolgsnf', 40, bold=True, italic=False)
 FPS = 60
-image = pygame.image.load('messi.png')
+image = pygame.image.load('img/messi.png')
 
 col_order = [x for x in range(image.get_height())]
 random.shuffle(col_order)
